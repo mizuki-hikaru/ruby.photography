@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruby Murray Photography</title>
+  <style>
+    @font-face {
+      font-family: 'RockSalt';
+      src: url('RockSalt-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    :root {
+      --bg: #ffffff;
+      --text: #333;
+      --accent: #555;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .link, .link:visited {
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 2rem;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'RockSalt';
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: bold;
+      border: 1px solid var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 7px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    nav a:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 1rem;
+      padding-top: 0;
+    }
+
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: black;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.02);
+    }
+
+    .about {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .modal {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .modal.invisible {
+      visibility: hidden;
+    }
+
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal:after {
+      content: "✕";
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Ruby Murray Photography</h1>
+  </header>
+
+  <nav>
+    <a href="/index.html">Photos</a>
+    <a href="/about.html">About</a>
+  </nav>
+
+  <main class="about">
+    <p>
+      Hi, I'm Ruby. These are my photos. Enjoy!
+    </p>
+  </main>
+
+  <div class="modal invisible" id="modal">
+    <img id="modal-img" src="" alt="Full photo" />
+  </div>
+
+  <footer>
+    &copy; 2025 Ruby Murray. All rights reserved.
+  </footer>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const images = document.querySelectorAll('.gallery img');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.src;
+        modal.classList.add('show');
+        modal.classList.remove('invisible');
+      });
+    });
+
+    modal.addEventListener('click', () => {
+      modal.classList.remove('show');
+      setTimeout(() => {
+        if (!modal.classList.contains('show')) {
+          modal.classList.add('invisible');
+        }
+      }, 300);
+      modalImg.src = '';
+    });
+  </script>
+
+</body>
+</html>
